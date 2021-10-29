@@ -1,24 +1,7 @@
-# setmovie
+# Quickstart template
+The code from the video tutorial Getting started with Vue 3 + Vite in 2021 (feat. Tailwind CSS, Vue Router, Vuex, ESLint & Prettier): https://www.youtube.com/watch?v=O8epzPrsADI
 
-## Project setup
-```
-npm install
-```
+After cloning, go to the project folder and install node modules
+`npm install`
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+This is essentially a fresh install of Vue 3 + Vite, ESLint, Prettier, TailwindCSS, Vue Router, Vuex
