@@ -3,8 +3,14 @@ import axiosClient from './axiosClient';
 export const category = {
     movie: 'movie',
     tv: 'tv',
+    person: 'person',
 };
 
+export const preson = {
+    popular: 'popular',
+    top_rated: 'top_rated',
+    upcoming: 'upcoming',
+};
 export const movie = {
     popular: 'popular',
     top_rated: 'top_rated',
@@ -20,11 +26,15 @@ export const tv = {
 const tmdb = {
     getMoviesList: (type, params) => {
         const url = 'movie/' + movie[type];
-        return axiosClient.get(url, params);
+        return axiosClient.get(url, { params: params });
     },
     getTvList: (type, params) => {
         const url = 'tv/' + tv[type];
-        return axiosClient.get(url, params);
+        return axiosClient.get(url, { params: params });
+    },
+    getActorsList: (type, params) => {
+        const url = 'person/' + preson[type];
+        return axiosClient.get(url, { params: params });
     },
     getVideos: (cate, id) => {
         const url = category[cate] + '/' + id + '/videos';
@@ -32,14 +42,26 @@ const tmdb = {
     },
     search: (cate, params) => {
         const url = 'search/' + category[cate];
-        return axiosClient.get(url, params);
+        return axiosClient.get(url, { params: params });
     },
-    detail: (cate, id, params) => {
+    details: (cate, id, params) => {
         const url = category[cate] + '/' + id;
-        return axiosClient.get(url, params);
+        return axiosClient.get(url, { params: params });
+    },
+    actor: (cate, id) => {
+        const url = category[cate] + '/' + id;
+        return axiosClient.get(url, { params: {} });
+    },
+    actorSocial: (cate, id) => {
+        const url = category[cate] + '/' + id + '/external_ids';
+        return axiosClient.get(url, { params: {} });
     },
     credits: (cate, id) => {
         const url = category[cate] + '/' + id + '/credits';
+        return axiosClient.get(url, { params: {} });
+    },
+    combineCredits: (cate, id) => {
+        const url = category[cate] + '/' + id + '/combined_credits';
         return axiosClient.get(url, { params: {} });
     },
     similar: (cate, id) => {

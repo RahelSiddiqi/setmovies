@@ -1,157 +1,50 @@
 <template>
-    <div
-        @mouseover="showTooltip(movie.id)"
-        @mouseleave="hideTooltip(movie.id)"
-        class="
-            bg-white
-            rounded-lg
-            shadow-md
-            h-mcard
-            m-1
-            md:h-card
-            flex flex-col
-            relative
-        "
-    >
-        <div class="flex-1">
-            <div class="relative">
+    <div @mouseover="showTooltip(movie.id)" @mouseleave="hideTooltip(movie.id)">
+        <div class="mt-8">
+            <router-link
+                :to="{
+                    name: 'Details',
+                    params: { type: type ? 'movies' : 'tvs', id: movie.id },
+                }"
+            >
                 <img
-                    class="
-                        h-full
-                        object-cover object-center
-                        rounded-lg
-                        swiper-lazy
+                    class="hover:opacity-75 transition ease-in-out duration-150"
+                    :src="
+                        shortImage(
+                            movie.poster_path ??
+                                '6HuPZbS9UyAIFE5t39v9elmfX6d.jpg'
+                        )
                     "
-                    :src="shortImage(movie.poster_path)"
-                    :alt="movie.title"
+                    :alt="movie.title ?? movie.original_title"
                 />
-                <div
-                    class="
-                        pl-2
-                        pb-1
-                        text-white
-                        w-full
-                        absolute
-                        bottom-0
-                        rounded-lg
-                    "
-                    style="background: rgba(0, 0, 0, 0.8)"
-                >
-                    <h2 class="text-xl font-bold">
-                        {{ type ? movie.title : movie.name }}
-                    </h2>
-                    <p class="text-md font-semibold">
-                        {{ type ? movie.release_date : movie.first_air_date }}
-                    </p>
-
-                    <div class="whitespace-no-wrap">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                            focusable="false"
-                            data-prefix="fas"
-                            data-icon="star"
-                            class="
-                                svg-inline--fa
-                                fa-star fa-w-18
-                                w-4
-                                mt-1
-                                float-left
-                                display-inline
-                                align-middle
-                            "
-                            role="img"
-                            viewBox="0 0 576 512"
-                        >
+            </router-link>
+            <div class="mt-2">
+                <h2 class="text-lg mt-2 hover:text-gray-300">
+                    {{
+                        type ? movie.title : movie.name ?? movie.original_title
+                    }}
+                </h2>
+                <div class="flex items-center text-gray-400 text-sm mt-1">
+                    <svg
+                        class="fill-current text-orange-500 w-4"
+                        viewBox="0 0 24 24"
+                    >
+                        <g data-name="Layer 2">
                             <path
-                                fill="currentColor"
-                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z"
+                                data-name="star"
                             />
-                        </svg>
-                        <span class="ml-1">{{ movie.vote_average }}/10 </span>
-                    </div>
+                        </g>
+                    </svg>
+                    <span class="ml-1">{{ movie.vote_average }}</span>
+                    <span class="mx-2">|</span>
+                    <span>{{
+                        movie.release_date ?? movie.first_air_date
+                    }}</span>
                 </div>
-            </div>
-        </div>
-        <div
-            :id="parent + '_' + movie.id"
-            class="
-                absolute
-                inset-0
-                z-10
-                w-92
-                h-card
-                p-2
-                text-sm
-                leading-tight
-                text-white
-                rounded-lg
-                shadow-lg
-                hidden
-            "
-            style="background: rgba(0, 0, 0, 0.9)"
-        >
-            <img
-                class="w-full h-1/3 object-cover object-center rounded-t-lg"
-                :src="shortImage(movie.backdrop_path ?? movie.poster_path)"
-                alt="Mountain"
-            />
-            <div class="px-6 py-4">
-                <div class="font-bold text-xl mb-2">
-                    {{ type ? movie.title : movie.name }}
+                <div class="text-gray-400 text-sm">
+                    {{ movie.genres }}
                 </div>
-                <p class="text-gray-400 text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Voluptatibus quia, nulla! Maiores et perferendis eaque,
-                    exercitationem praesentium nihil.
-                </p>
-            </div>
-            <div class="px-6 pt-2 pb-2">
-                <span
-                    class="
-                        inline-block
-                        bg-gray-200
-                        rounded-full
-                        px-3
-                        py-1
-                        text-sm
-                        font-semibold
-                        text-gray-700
-                        mr-2
-                        mb-2
-                    "
-                    >#photography</span
-                >
-                <span
-                    class="
-                        inline-block
-                        bg-gray-200
-                        rounded-full
-                        px-3
-                        py-1
-                        text-sm
-                        font-semibold
-                        text-gray-700
-                        mr-2
-                        mb-2
-                    "
-                    >#travel</span
-                >
-                <span
-                    class="
-                        inline-block
-                        bg-gray-200
-                        rounded-full
-                        px-3
-                        py-1
-                        text-sm
-                        font-semibold
-                        text-gray-700
-                        mr-2
-                        mb-2
-                    "
-                    >#winter</span
-                >
             </div>
         </div>
     </div>
@@ -163,12 +56,12 @@ export default {
     setup(props) {
         const shortImage = apiConfig.w500Image;
         function showTooltip(id) {
-            document.getElementById(props.parent + '_' + id).style.display =
-                'block';
+            // document.getElementById(props.parent + '_' + id).style.display =
+            //     'block';
         }
         function hideTooltip(id) {
-            document.getElementById(props.parent + '_' + id).style.display =
-                'none';
+            // document.getElementById(props.parent + '_' + id).style.display =
+            //     'none';
         }
         return { showTooltip, hideTooltip, shortImage };
     },

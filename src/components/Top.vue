@@ -1,7 +1,7 @@
 <template>
     <div class="w-full block clear-left md:p-6">
         <div>
-            <h2 class="text-xl font-extrabold p-4">
+            <h2 class="text-xl font-extrabold p-4 box-border">
                 Top Rated ({{ type.toUpperCase() }})
             </h2>
         </div>
