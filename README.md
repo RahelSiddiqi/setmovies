@@ -7,7 +7,6 @@ This is an vue js application consume data form THDB api and show movies, series
 ## Installation
 
 in development [Node.js](https://nodejs.org/) v16.4.0 used.
-requires [Node.js](https://nodejs.org/) v14.0+ to run.
 
 Install the dependencies and devDependencies and start the server.
 
