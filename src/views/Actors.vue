@@ -28,7 +28,13 @@
                     @keydown.enter="search"
                 />
             </h2>
-            <div
+            <transition-group
+                appear
+                name="staggered-fade"
+                tag="div"
+                :css="false"
+                @before-enter="beforeEnter"
+                @enter="enter"
                 class="
                     grid grid-cols-1
                     sm:grid-cols-2
@@ -39,8 +45,9 @@
             >
                 <div
                     class="actor mt-8"
-                    v-for="actor in resources"
+                    v-for="(actor, index) in resources"
                     :key="actor.id"
+                    :data-order="index"
                 >
                     <router-link
                         :to="{
@@ -79,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </transition-group>
         </div>
         <div class="flex items-center m-5">
             <button
@@ -116,6 +123,7 @@ import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import { computed, ref } from 'vue';
 import apiConfig from './../services/tmdb/apiConfig';
+import annimation from '../services/annimation';
 export default {
     components: { Card },
     setup() {
@@ -164,8 +172,17 @@ export default {
                 dispatch('actors/SEARCH', params);
             }
         };
-
-        return { resources, loadMore, search, keyword, shortImage };
+        const beforeEnter = annimation.beforeEnter;
+        const enter = annimation.enter;
+        return {
+            resources,
+            loadMore,
+            search,
+            keyword,
+            shortImage,
+            beforeEnter,
+            enter,
+        };
     },
 };
 </script>

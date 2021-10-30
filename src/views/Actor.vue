@@ -121,12 +121,19 @@
 
                 <h4 class="font-semibold mt-12">Known For</h4>
 
-                <div
+                <transition-group
+                    appear
+                    name="staggered-fade"
+                    tag="div"
+                    :css="false"
+                    @before-enter="beforeEnter"
+                    @enter="enter"
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8"
                 >
                     <div
                         class="mt-4"
-                        v-for="fvt in actor.known_for"
+                        v-for="(fvt, index) in actor.known_for"
+                        :data-order="index"
                         :key="fvt.id"
                     >
                         <router-link
@@ -166,7 +173,7 @@
                             >{{ fvt.title ?? fvt.name }}
                         </router-link>
                     </div>
-                </div>
+                </transition-group>
             </div>
         </div>
     </div>
@@ -174,11 +181,21 @@
     <div class="credits border-b border-gray-800">
         <div class="container mx-auto px-4 py-16" v-if="actor.credits">
             <h2 class="text-4xl font-semibold">Credits</h2>
-            <ul
+            <transition-group
+                appear
+                name="staggered-fade"
+                tag="div"
+                :css="false"
+                @before-enter="beforeEnter"
+                @enter="enter"
                 class="list-disc leading-loose pl-5 mt-8"
                 v-if="actor.credits.cast"
             >
-                <li v-for="credit in actor.credits.cast" :key="credit.id">
+                <li
+                    v-for="(credit, index) in actor.credits.cast"
+                    :key="credit.id"
+                    :data-order="index"
+                >
                     {{ credit.release_date ?? credit.first_air_date }} &middot;
                     <strong
                         ><router-link
@@ -195,7 +212,7 @@
                     >
                     as {{ credit.character }}
                 </li>
-            </ul>
+            </transition-group>
         </div>
     </div>
 </template>
@@ -205,6 +222,7 @@ import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import apiConfig from './../services/tmdb/apiConfig';
+import annimation from '../services/annimation';
 export default {
     setup() {
         const { dispatch, getters } = useStore();
@@ -214,7 +232,9 @@ export default {
         const shortImage = apiConfig.w500Image;
         var actor = computed(() => getters['actors/getActor']);
         dispatch('actors/GET_ACTOR', id);
-        return { actor, originalImage, shortImage };
+        const beforeEnter = annimation.beforeEnter;
+        const enter = annimation.enter;
+        return { actor, originalImage, shortImage, beforeEnter, enter };
     },
 };
 </script>

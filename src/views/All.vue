@@ -28,7 +28,13 @@
                     @keydown.enter="search"
                 />
             </h2>
-            <div
+            <transition-group
+                appear
+                name="staggered-fade"
+                tag="div"
+                :css="false"
+                @before-enter="beforeEnter"
+                @enter="enter"
                 class="
                     grid grid-cols-1
                     sm:grid-cols-2
@@ -38,13 +44,14 @@
                 "
             >
                 <card
-                    v-for="movie in resources"
+                    v-for="(movie, index) in resources"
                     :key="movie.id"
+                    :data-order="index"
                     :movie="movie"
                     parent="popular"
                     :type="type == 'movies'"
                 />
-            </div>
+            </transition-group>
         </div>
         <div class="flex items-center m-5">
             <button
@@ -80,6 +87,7 @@ import Card from '../components/Card.vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import { computed, ref } from 'vue';
+import annimation from '../services/annimation';
 export default {
     components: { Card },
     setup() {
@@ -157,8 +165,18 @@ export default {
                 }
             }
         };
+        const beforeEnter = annimation.beforeEnter;
+        const enter = annimation.enter;
 
-        return { type, resources, loadMore, search, keyword };
+        return {
+            type,
+            resources,
+            loadMore,
+            search,
+            keyword,
+            beforeEnter,
+            enter,
+        };
     },
 };
 </script>

@@ -77,12 +77,19 @@
 
                 <h4 class="font-semibold mt-12">Similar</h4>
 
-                <div
+                <transition-group
+                    appear
+                    name="staggered-fade"
+                    tag="div"
+                    :css="false"
+                    @before-enter="beforeEnter"
+                    @enter="enter"
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8"
                 >
                     <div
                         class="mt-4"
-                        v-for="similar in movie.similar"
+                        v-for="(similar, index) in movie.similar"
+                        :data-order="index"
                         :key="'similar_' + similar.id"
                     >
                         <router-link
@@ -122,7 +129,7 @@
                             >{{ similar.title ?? similar.name }}
                         </router-link>
                     </div>
-                </div>
+                </transition-group>
             </div>
         </div>
     </div>
@@ -131,7 +138,13 @@
     <div class="movie-cast border-b border-gray-800" v-if="movie.credits">
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Cast</h2>
-            <div
+            <transition-group
+                appear
+                name="staggered-fade"
+                tag="div"
+                :css="false"
+                @before-enter="beforeEnter"
+                @enter="enter"
                 class="
                     grid grid-cols-1
                     sm:grid-cols-2
@@ -143,7 +156,8 @@
             >
                 <div
                     class="mt-8"
-                    v-for="cast in movie.credits.cast"
+                    v-for="(cast, index) in movie.credits.cast"
+                    :data-order="index"
                     :key="'cast_' + cast.id"
                 >
                     <router-link
@@ -180,13 +194,19 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </transition-group>
         </div>
     </div>
     <div class="movie-cast border-b border-gray-800" v-if="movie.credits">
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Crew</h2>
-            <div
+            <transition-group
+                appear
+                name="staggered-fade"
+                tag="div"
+                :css="false"
+                @before-enter="beforeEnter"
+                @enter="enter"
                 class="
                     grid grid-cols-1
                     sm:grid-cols-2
@@ -198,7 +218,8 @@
             >
                 <div
                     class="mt-8"
-                    v-for="crew in movie.credits.crew"
+                    v-for="(crew, index) in movie.credits.crew"
+                    :data-order="index"
                     :key="'crew_' + crew.id"
                 >
                     <router-link
@@ -235,7 +256,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </transition-group>
         </div>
     </div>
 
@@ -243,9 +264,16 @@
         <div class="container mx-auto px-4 py-16" v-if="movie.images">
             <h2 class="text-4xl font-semibold">Images</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                <div
+                <transition-group
+                    appear
+                    name="staggered-fade"
+                    tag="div"
+                    :css="false"
+                    @before-enter="beforeEnter"
+                    @enter="enter"
                     class="mt-8"
-                    v-for="image in movie.images.posters"
+                    v-for="(image, index) in movie.images.posters"
+                    :data-order="index"
                     :key="'image_' + image"
                 >
                     <a
@@ -263,7 +291,7 @@
                             "
                         />
                     </a>
-                </div>
+                </transition-group>
             </div>
 
             <div
@@ -322,6 +350,7 @@ import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import apiConfig from './../services/tmdb/apiConfig';
+import annimation from '../services/annimation';
 export default {
     setup() {
         const { dispatch, getters } = useStore();
@@ -332,7 +361,17 @@ export default {
         const shortImage = apiConfig.w500Image;
         var movie = computed(() => getters[type + '/getSingle']);
         dispatch(type + '/GET_BY_ID', id);
-        return { isOpen, movie, type, originalImage, shortImage };
+        const beforeEnter = annimation.beforeEnter;
+        const enter = annimation.enter;
+        return {
+            isOpen,
+            movie,
+            type,
+            originalImage,
+            shortImage,
+            beforeEnter,
+            enter,
+        };
     },
 };
 </script>

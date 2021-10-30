@@ -1,12 +1,24 @@
 <template>
-    <div class="w-full block clear-left md:p-6">
-        <div>
-            <h2 class="text-xl font-extrabold p-4 box-border">
-                Top Rated ({{ type.toUpperCase() }})
-            </h2>
-        </div>
+    <div class="top-movies">
+        <h2
+            class="
+                uppercase
+                tracking-wider
+                text-orange-500 text-lg
+                font-semibold
+            "
+        >
+            Top Rated ({{ type.toUpperCase() }})
+        </h2>
+
         <swiper
-            class="relative"
+            class="
+                grid grid-cols-1
+                sm:grid-cols-2
+                md:grid-cols-3
+                lg:grid-cols-5
+                gap-8
+            "
             parallax
             grabCursor
             :lazy="true"
@@ -18,7 +30,7 @@
             }"
         >
             <swiper-slide
-                class="float-left w-1/2 p-1 md:w-1/6"
+                class="flex float-left w-1/2 p-1 md:w-1/6"
                 v-for="movie in top_rated"
                 :key="movie.id"
             >

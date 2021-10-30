@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-container">
         <nav class="border-b border-gray-800">
             <div
                 class="
