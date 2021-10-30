@@ -12,7 +12,7 @@ Install the dependencies and devDependencies and start the server.
 
 ```sh
 git clone https://github.com/RahelSiddiqi/setmovies.git folder-name
-cd cd folder-name
+cd folder-name
 npm install
 
 ```
