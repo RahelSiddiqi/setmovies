@@ -8,7 +8,7 @@
                 font-semibold
             "
         >
-            Popular Movies
+            Popular {{ type }}
         </h2>
 
         <swiper

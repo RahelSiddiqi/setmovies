@@ -10,6 +10,23 @@
                 "
             >
                 Popular Actors
+                <input
+                    type="text"
+                    v-model="keyword"
+                    placeholder="serach movies/tvs"
+                    class="
+                        ml-20
+                        bg-gray-800
+                        text-sm
+                        rounded-full
+                        w-64
+                        px-4
+                        pl-8
+                        py-1
+                        focus:outline-none focus:shadow-outline
+                    "
+                    @keydown.enter="search"
+                />
             </h2>
             <div
                 class="
@@ -34,7 +51,12 @@
                         }"
                     >
                         <img
-                            :src="shortImage(actor.profile_path)"
+                            :src="
+                                shortImage(
+                                    actor.profile_path ??
+                                        '/qqKrUA9KuE7r5WJy0jljl6KvxEv.jpg'
+                                )
+                            "
                             alt="profile image"
                             class="
                                 hover:opacity-75

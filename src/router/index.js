@@ -23,14 +23,14 @@ const routes = [
         component: All,
     },
     {
-        path: '/actor/:id',
-        name: 'Actor',
-        component: Actor,
-    },
-    {
         path: '/details/:type/:id',
         name: 'Details',
         component: Details,
+    },
+    {
+        path: '/actor/:id',
+        name: 'Actor',
+        component: Actor,
     },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: PageNotFound },
     { path: '/:pathMatch(.*)', name: 'bad-not-found', component: PageNotFound },

@@ -12,6 +12,7 @@
                 Popular {{ type }}
                 <input
                     type="text"
+                    v-model="keyword"
                     placeholder="serach movies/tvs"
                     class="
                         ml-20
@@ -24,7 +25,7 @@
                         py-1
                         focus:outline-none focus:shadow-outline
                     "
-                    @input.enter="search"
+                    @keydown.enter="search"
                 />
             </h2>
             <div

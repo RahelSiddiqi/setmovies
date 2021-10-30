@@ -61,7 +61,7 @@ export default {
                     credits: credits,
                     known_for: known_for,
                 };
-                console.log(actor);
+
                 commit('SET_ACTOR', actor);
             } catch (error) {
                 console.log(error);
