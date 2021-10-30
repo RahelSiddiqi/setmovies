@@ -2,9 +2,9 @@
 
 This is an vue js application consume data form THDB api and show movies, series, acctors.
 
-## Installatin process
 
-## Installation
+
+### Installation
 
 in development [Node.js](https://nodejs.org/) v16.4.0 used.
 
