@@ -1,6 +1,6 @@
 <template>
-    <div @mouseover="showTooltip(movie.id)" @mouseleave="hideTooltip(movie.id)">
-        <div class="mt-8">
+    <div>
+        <div class="mt-8 relative">
             <router-link
                 :to="{
                     name: 'Details',
@@ -18,12 +18,31 @@
                     :alt="movie.title ?? movie.original_title"
                 />
             </router-link>
-            <div class="mt-2">
+            <div
+                @mouseover="showTooltip(movie.id)"
+                @mouseleave="hideTooltip(movie.id)"
+                class="mt-2"
+            >
                 <h2 class="text-lg mt-2 hover:text-gray-300">
                     {{
                         type ? movie.title : movie.name ?? movie.original_title
                     }}
                 </h2>
+                <div
+                    :id="parent + '_' + movie.id"
+                    class="
+                        absolute
+                        inset-0
+                        w-full
+                        h-full
+                        bg-gray-800
+                        p-4
+                        overflow-hidden
+                        hidden
+                    "
+                >
+                    {{ movie.overview }}
+                </div>
                 <div class="flex items-center text-gray-400 text-sm mt-1">
                     <svg
                         class="fill-current text-orange-500 w-4"
@@ -39,7 +58,7 @@
                     <span class="ml-1">{{ movie.vote_average }}</span>
                     <span class="mx-2">|</span>
                     <span>{{
-                        movie.release_date ?? movie.first_air_date
+                        formatDate(movie.release_date ?? movie.first_air_date)
                     }}</span>
                 </div>
                 <div class="text-gray-400 text-sm">
@@ -50,20 +69,22 @@
     </div>
 </template>
 <script>
+import annimation from '../services/annimation';
 import apiConfig from './../services/tmdb/apiConfig';
 export default {
     props: ['movie', 'parent', 'type'],
     setup(props) {
         const shortImage = apiConfig.w500Image;
+        const formatDate = annimation.format;
         function showTooltip(id) {
-            // document.getElementById(props.parent + '_' + id).style.display =
-            //     'block';
+            document.getElementById(props.parent + '_' + id).style.display =
+                'block';
         }
         function hideTooltip(id) {
-            // document.getElementById(props.parent + '_' + id).style.display =
-            //     'none';
+            document.getElementById(props.parent + '_' + id).style.display =
+                'none';
         }
-        return { showTooltip, hideTooltip, shortImage };
+        return { showTooltip, hideTooltip, shortImage, formatDate };
     },
 };
 </script>

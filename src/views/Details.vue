@@ -26,11 +26,11 @@
                     </svg>
                     <span class="ml-1">{{ movie.vote_average }}</span>
                     <span class="mx-2">|</span>
-                    <span>
+                    <span v-if="movie">
                         {{
                             type == 'movies'
-                                ? movie.release_date
-                                : movie.first_air_date
+                                ? formatDate(movie.release_date)
+                                : formatDate(movie.first_air_date)
                         }}</span
                     >
                     <span class="mx-2">|</span>
@@ -277,6 +277,7 @@
                     :key="'image_' + image"
                 >
                     <a
+                        :key="'image_link' + image"
                         @click.prevent="isOpen = true"
                         :image="shortImage(image.file_path)"
                     >
@@ -356,6 +357,7 @@ export default {
         const { dispatch, getters } = useStore();
         const route = useRoute();
         const { type, id } = route.params;
+        const formatDate = annimation.format;
         const isOpen = ref(false);
         const originalImage = apiConfig.originalImage;
         const shortImage = apiConfig.w500Image;
@@ -371,6 +373,7 @@ export default {
             shortImage,
             beforeEnter,
             enter,
+            formatDate,
         };
     },
 };

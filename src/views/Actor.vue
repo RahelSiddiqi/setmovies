@@ -110,8 +110,10 @@
                         />
                     </svg>
                     <span class="ml-2"
-                        >{{ actor.birthday }} ({{ actor.age }} years old) in
-                        {{ actor.place_of_birth }}</span
+                        >{{ formatDate(actor.birthday) }} ({{
+                            calculateAge(actor.birthday)
+                        }}
+                        years old) in {{ actor.place_of_birth }}</span
                     >
                 </div>
 
@@ -196,7 +198,11 @@
                     :key="credit.id"
                     :data-order="index"
                 >
-                    {{ credit.release_date ?? credit.first_air_date }} &middot;
+                    {{
+                        formatDate(credit.release_date) ??
+                        formatDate(credit.first_air_date)
+                    }}
+                    &middot;
                     <strong
                         ><router-link
                             :to="{
@@ -228,13 +234,23 @@ export default {
         const { dispatch, getters } = useStore();
         const route = useRoute();
         const { id } = route.params;
+        const formatDate = annimation.format;
+        const calculateAge = annimation.calculateAge;
         const originalImage = apiConfig.originalImage;
         const shortImage = apiConfig.w500Image;
         var actor = computed(() => getters['actors/getActor']);
         dispatch('actors/GET_ACTOR', id);
         const beforeEnter = annimation.beforeEnter;
         const enter = annimation.enter;
-        return { actor, originalImage, shortImage, beforeEnter, enter };
+        return {
+            actor,
+            originalImage,
+            shortImage,
+            beforeEnter,
+            enter,
+            formatDate,
+            calculateAge,
+        };
     },
 };
 </script>

@@ -15,6 +15,24 @@ const annimation = {
             delay: 0.3 * index,
         });
     },
+    format: (dateString) => {
+        if (dateString === undefined || dateString === '') {
+            return;
+        }
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat('default', { dateStyle: 'long' }).format(
+            date
+        );
+    },
+  calculateAge: ( dob ) =>
+  {
+      
+        const date = new Date(dob);
+        var diff_ms = Date.now() - date.getTime();
+        var age_dt = new Date(diff_ms);
+
+        return Math.abs(age_dt.getUTCFullYear() - 1970);
+    },
 };
 
 export default annimation;
